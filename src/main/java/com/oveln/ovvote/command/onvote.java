@@ -36,7 +36,7 @@ public class onvote implements CommandExecutor , TabCompleter {
                 if (main.getInstance().getServer().getPlayer(args[1]) != null) {
                     String cmd = "&6"+player.getName()+"&f发起了对&6"+args[1]+"&f执行&2"+args[0]+"&f的投票";
                     Bukkit.broadcastMessage(Chater.t(cmd));
-                    cmd = "同意请输入[&2y&f]   不同意请输入[&cn&f]";
+                    cmd = "同意请输入[&2y&f]   反对请输入[&cn&f]";
                     Bukkit.broadcastMessage(Chater.t(cmd));
                     cmd = commands.getConfigurationSection(args[0]).getString("command").replace("%player%" , args[1]);
                     main.getInstance().getVotebar().start(player , cmd , args[1] , args[0]);

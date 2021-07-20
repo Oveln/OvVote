@@ -33,7 +33,8 @@ public class Votebar {
     }
     public boolean AddYes(Player player) {
         if (!Voted.contains(player)) {
-            bossbar.setTitle(getTitle(++yes , no , cmdname , target));
+            yes++;
+            bossbar.setTitle(getTitle(yes , no , cmdname , target));
             Voted.add(player);
             return true;
         }else {
@@ -43,7 +44,8 @@ public class Votebar {
     }
     public boolean AddNo(Player player) {
         if (!Voted.contains(player)) {
-            bossbar.setTitle(getTitle(yes , ++no , cmdname , target));
+            no++;
+            bossbar.setTitle(getTitle(yes , no , cmdname , target));
             Voted.add(player);
             return true;
         }else {
@@ -53,7 +55,7 @@ public class Votebar {
     }
     public void start(Player player ,String cmd ,String target,String cmdname) {
         able = false;
-        this.cmd = cmd;
+        this.cmd = cmd;this.cmdname = cmdname;this.target = target;
         bossbar.setTitle(getTitle(yes , no , cmdname , target));
         StartTime.put(player , System.currentTimeMillis());
         for (Player p : Bukkit.getOnlinePlayers())

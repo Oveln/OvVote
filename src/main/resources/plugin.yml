@@ -6,4 +6,4 @@ api-version: "1.12.2"
 commands:
   vote:
     description: 发起投票
-    usage: /vote <投票项名称> <投票目标>
+    usage: /vote <投票命令名称> <投票目标>

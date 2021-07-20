@@ -1,4 +1,4 @@
-#投票间隔（单位秒）
+#单个玩家发起投票间隔（单位秒）
 interval: 100
 #投票时限（单位秒）
 TimeLimit: 30
@@ -11,6 +11,7 @@ Title: "同意&2%yes%&f人--对%player%执行%cmd%--反对&c%no%&f人"
 #命令列表
 #%player%表示目标玩家
 Commands:
+  #命令名称为[杀死]
   杀死:
     command: "kill %player%"
   封禁:
