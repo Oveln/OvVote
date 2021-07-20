@@ -13,34 +13,38 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static com.oveln.utils.Chater.getTitle;
+
 public class Votebar {
     private final BossBar bossbar;
+    private final Set<Player> Voted;
+    private final Map<Player , Long> StartTime;
     private Integer yes , no;
-    private Set<Player> Voted;
-    private Map<Player , Long> StartTime;
-    String cmd;
+    String cmd , cmdname , target;
+    boolean able;
 
     public Votebar() {
+        able = true;
         yes = 0;
         no = 0;
         bossbar  = Bukkit.createBossBar("投票" , BarColor.RED , BarStyle.SOLID);
         Voted = new HashSet<>();
         StartTime = new HashMap<>();
         cmd = "";
+        cmdname = "";
+        target = "";
     }
     private void reset() {
+        able = true;
         bossbar.removeAll();
         yes = 0;
         no = 0;
         Voted.clear();
     }
-    private String getTitle() {
-        return Chater.t("&2赞同&6"+yes+"&f人----&c反对&6"+no+"&f人");
-    }
     public boolean AddYes(Player player) {
         if (!Voted.contains(player)) {
             yes++;
-            bossbar.setTitle(getTitle());
+            bossbar.setTitle(getTitle(yes , no , cmdname , target));
             Voted.add(player);
             return true;
         }else {
@@ -51,7 +55,7 @@ public class Votebar {
     public boolean AddNo(Player player) {
         if (!Voted.contains(player)) {
             no++;
-            bossbar.setTitle(getTitle());
+            bossbar.setTitle(getTitle(yes , no , cmdname , target));
             Voted.add(player);
             return true;
         }else {
@@ -59,9 +63,10 @@ public class Votebar {
             return false;
         }
     }
-    public void start(Player player ,String cmd) {
+    public void start(Player player ,String cmd ,String target,String cmdname) {
+        able = false;
         this.cmd = cmd;
-        bossbar.setTitle(getTitle());
+        bossbar.setTitle(getTitle(yes , no , cmdname , target));
         StartTime.put(player , System.currentTimeMillis());
         for (Player p : Bukkit.getOnlinePlayers())
             bossbar.addPlayer(p);
@@ -82,8 +87,9 @@ public class Votebar {
         bossbar.setProgress(x);
     }
     public boolean canStart(Player player) {
-        if (!StartTime.containsKey(player) || (System.currentTimeMillis() - StartTime.get(player)) > main.getInstance().getConfig().getInt("interval")* 1000L)
-            return true;
-        return false;
+        return !StartTime.containsKey(player) || (System.currentTimeMillis() - StartTime.get(player)) > main.getInstance().getConfig().getInt("interval") * 1000L;
+    }
+    public boolean isAble() {
+        return able;
     }
 }

@@ -21,6 +21,10 @@ public class onvote implements CommandExecutor , TabCompleter {
             commandSender.sendMessage(Chater.t("&c只有玩家可以执行该指令"));
             return true;
         }
+        if (!main.getInstance().getVotebar().isAble()) {
+            commandSender.sendMessage(Chater.t("&c有一个投票正在进行中"));
+            return true;
+        }
         if (args.length == 2) {
             Player player = (Player) commandSender;
             if (!main.getInstance().getVotebar().canStart(player)) {
@@ -35,7 +39,7 @@ public class onvote implements CommandExecutor , TabCompleter {
                     cmd = "同意请输入[&2y&f]   不同意请输入[&cn&f]";
                     Bukkit.broadcastMessage(Chater.t(cmd));
                     cmd = commands.getConfigurationSection(args[0]).getString("command").replace("%player%" , args[1]);
-                    main.getInstance().getVotebar().start(player , cmd);
+                    main.getInstance().getVotebar().start(player , cmd , args[1] , args[0]);
                 }
             }
             return true;
