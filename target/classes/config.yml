@@ -1,0 +1,14 @@
+#投票间隔（单位秒）
+interval: 100
+#投票时限（单位秒）
+TimeLimit: 30
+#判定系数（该值可以为小数）
+#赞同人数✖coefficient > 反对人数 时判定投票结果为成功，否则为不成功
+coefficient: 1.0
+#命令列表
+#%player%表示目标玩家
+Commands:
+  ban:
+    command: "ban %player%"
+  kill:
+    command: "kill %player%"
