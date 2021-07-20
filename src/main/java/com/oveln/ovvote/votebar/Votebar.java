@@ -24,27 +24,16 @@ public class Votebar {
     boolean able;
 
     public Votebar() {
-        able = true;
-        yes = 0;
-        no = 0;
         bossbar  = Bukkit.createBossBar("投票" , BarColor.RED , BarStyle.SOLID);
         Voted = new HashSet<>();
         StartTime = new HashMap<>();
-        cmd = "";
-        cmdname = "";
-        target = "";
-    }
-    private void reset() {
         able = true;
-        bossbar.removeAll();
-        yes = 0;
-        no = 0;
-        Voted.clear();
+        yes = no = 0;
+        cmd = cmdname = target = "";
     }
     public boolean AddYes(Player player) {
         if (!Voted.contains(player)) {
-            yes++;
-            bossbar.setTitle(getTitle(yes , no , cmdname , target));
+            bossbar.setTitle(getTitle(++yes , no , cmdname , target));
             Voted.add(player);
             return true;
         }else {
@@ -54,8 +43,7 @@ public class Votebar {
     }
     public boolean AddNo(Player player) {
         if (!Voted.contains(player)) {
-            no++;
-            bossbar.setTitle(getTitle(yes , no , cmdname , target));
+            bossbar.setTitle(getTitle(yes , ++no , cmdname , target));
             Voted.add(player);
             return true;
         }else {
@@ -70,6 +58,7 @@ public class Votebar {
         StartTime.put(player , System.currentTimeMillis());
         for (Player p : Bukkit.getOnlinePlayers())
             bossbar.addPlayer(p);
+
         bossbar.setProgress(1);
         new voteTask(main.getInstance().getConfig().getInt("TimeLimit")-1).runTaskLater(main.getInstance(),20);
     }
@@ -81,7 +70,10 @@ public class Votebar {
         }else {
             Bukkit.broadcastMessage(Chater.t("&c投票结果失败"));
         }
-        reset();
+        bossbar.removeAll();
+        yes = no = 0 ;
+        Voted.clear();
+        able = true;
     }
     public void update(Double x) {
         bossbar.setProgress(x);
