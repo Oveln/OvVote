@@ -1,9 +1,0 @@
-name: OvVote
-author: Oveln
-version: 1.0
-main: com.oveln.ovvote.main
-api-version: "1.12.2"
-commands:
-  vote:
-    description: 发起投票
-    usage: /vote <投票项名称> <投票目标>
